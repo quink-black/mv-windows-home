@@ -82,7 +82,7 @@ Only the latest move snapshot is kept. Running the move action again replaces th
 
 ## Limitations
 
-- MoveWindowsHome currently uses manual shortcuts and menu actions. Automatic display-switch detection is planned for a later version.
+- MoveWindowsHome only works on demand, through the shortcut or the menu bar item. Automatic detection is not possible: when a shared monitor is switched to another computer through a KVM, a monitor input switch, or an HDMI switch, macOS still reports the display as connected and emits no event, so no reliable signal is available.
 - Only normal top-level application windows are moved. Panels, menus, sheets, and system overlays are ignored.
 - Some apps, especially games and a few Java apps, may reject Accessibility position changes.
 - Restore first matches by CoreGraphics window ID, then falls back to app bundle ID and window title. A changed window title may reduce restore accuracy.

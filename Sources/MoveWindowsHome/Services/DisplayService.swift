@@ -3,30 +3,6 @@ import CoreGraphics
 import Foundation
 
 final class DisplayService {
-    var onConfigurationChanged: (() -> Void)?
-
-    private var observer: NSObjectProtocol?
-
-    deinit { stopObserving() }
-
-    func startObserving() {
-        observer = NotificationCenter.default.addObserver(
-            forName: NSApplication.didChangeScreenParametersNotification,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            Log.display.info("Screen parameters changed")
-            self?.onConfigurationChanged?()
-        }
-    }
-
-    func stopObserving() {
-        if let observer {
-            NotificationCenter.default.removeObserver(observer)
-        }
-        observer = nil
-    }
-
     func allDisplays() -> [DisplayInfo] {
         NSScreen.screens.compactMap { DisplayService.makeInfo(from: $0) }
     }

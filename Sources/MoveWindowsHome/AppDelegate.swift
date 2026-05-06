@@ -5,7 +5,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var hotkeyManager: HotkeyManager?
     private var wrangler: WindowWrangler?
     private var permissionGuard: PermissionGuard?
-    private var displayService: DisplayService?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let display = DisplayService()
@@ -25,12 +24,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let guard_ = PermissionGuard()
         guard_.promptIfNeeded()
 
-        // Phase 2 hook: display configuration changes are observed but only
-        // used to refresh menu state; automatic triggering is not enabled.
-        display.onConfigurationChanged = { [weak menu] in menu?.refreshState() }
-        display.startObserving()
-
-        self.displayService = display
         self.wrangler = wrangler
         self.menuBarController = menu
         self.hotkeyManager = hotkey
@@ -39,6 +32,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         hotkeyManager?.unregisterAll()
-        displayService?.stopObserving()
     }
 }
